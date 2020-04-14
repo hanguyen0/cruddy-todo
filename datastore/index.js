@@ -32,7 +32,7 @@ exports.readAll = (callback) => {
   //   return { id, text };
   // });
   fs.readdir(exports.dataDir, (err, files) => {
-    if(err) {
+    if (err) {
       console.log("err inside readAll");
     } else {
       let data = _.map(files, (text, id) => {
@@ -43,18 +43,29 @@ exports.readAll = (callback) => {
       });
       callback(null, data);
     }
-    
+
   });
-  
+
 };
 
 exports.readOne = (id, callback) => {
-  var text = items[id];
-  if (!text) {
-    callback(new Error(`No item with id: ${id}`));
-  } else {
-    callback(null, { id, text });
-  }
+  // var text = items[id];
+  fs.readFile(`${exports.dataDir}/${id}.txt`, (err, fileData) => {
+    if (err) {
+      console.log("err from readOne");
+      callback(new Error(`No item with id: ${id}`));
+    } else {
+      // fileData = fileData.toString();
+      // if (!fileData) {
+      //   callback(new Error(`No item with id: ${id}`));
+      // } else {
+      //   callback(null, { id, fileData });
+      // }
+      let data = {id: id, text: fileData.toString()};
+      callback(null, data);
+    }
+  })
+
 };
 
 exports.update = (id, text, callback) => {
