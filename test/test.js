@@ -134,14 +134,14 @@ describe('todos', () => {
   });
 
   describe('readOne', () => {
-    xit('should return an error for non-existant todo', (done) => {
+    it('should return an error for non-existant todo', (done) => {
       todos.readOne('notAnId', (err, todo) => {
         expect(err).to.exist;
         done();
       });
     });
 
-    xit('should find a todo by id', (done) => {
+    it('should find a todo by id', (done) => {
       const todoText = 'buy chocolate';
       todos.create(todoText, (err, createdTodo) => {
         const id = createdTodo.id;

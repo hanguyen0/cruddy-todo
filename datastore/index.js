@@ -14,25 +14,38 @@ exports.create = (text, callback) => {
     if (err) {
       console.log(err);
     } else {
-      fs.writeFile(exports.dataDir + "/" + id + ".txt", text, (err) => {
+      fs.writeFile(exports.dataDir + '/' + id + '.txt', text, (err) => {
         if (err) {
-          throw ('error writing file in creat')
+          throw ('error writing file in create');
         } else {
-          callback(null, { id, text })
+          callback(null, { id, text });
         }
 
-      })
+      });
     }
   });
 
 };
 
 exports.readAll = (callback) => {
-  let data = _.map(items, (text, id) => {
-    return { id, text };
+  // let data = _.map(items, (text, id) => {
+  //   return { id, text };
+  // });
+  fs.readdir(exports.dataDir, (err, files) => {
+    if(err) {
+      console.log("err inside readAll");
+    } else {
+      let data = _.map(files, (text, id) => {
+        let num = text.split(".");
+        text = num[0];
+        id = text;
+        return { id, text };
+      });
+      callback(null, data);
+    }
+    
   });
-  fs.readdir(exports.dataDir)
-  callback(null, data);
+  
 };
 
 exports.readOne = (id, callback) => {

@@ -46,7 +46,7 @@ exports.getNextUniqueId = (callback) => {
   //write counter: turns a number to 00001 string
   //then write that string into counterFile
   //read counter all number from couterFile and turn to Number
-  readCounter((err, data) => writeCounter(data + 1, (err, id) => callback(null, id)))
+  readCounter((err, data) => writeCounter(data + 1, (err, id) => callback(null, id)));
   // readCounter((err, data) => {
   //   return writeCounter(data + 1, (err, id) => {
   //     return callback;
