@@ -12,7 +12,7 @@ exports.create = (text, callback) => {
   // console.log("dfdfdf", exports.dataDir)
   counter.getNextUniqueId((err, id) => {
     if (err) {
-      console.log(err);
+      callback(err, null);
     } else {
       fs.writeFile(exports.dataDir + '/' + id + '.txt', text, (err) => {
         if (err) {
@@ -33,7 +33,7 @@ exports.readAll = (callback) => {
   // });
   fs.readdir(exports.dataDir, (err, files) => {
     if (err) {
-      console.log('err inside readAll');
+      callback(err, null);
     } else {
       let data = _.map(files, (text, id) => {
         let num = text.split('.');
@@ -52,7 +52,7 @@ exports.readOne = (id, callback) => {
   // var text = items[id];
   fs.readFile(`${exports.dataDir}/${id}.txt`, (err, fileData) => {
     if (err) {
-      console.log('err from readOne');
+      // console.log('err from readOne');
       callback(new Error(`No item with id: ${id}`));
     } else {
       // fileData = fileData.toString();
@@ -101,7 +101,7 @@ exports.delete = (id, callback) => {
     } else {
       callback();
     }
-  })
+  });
   // if (!item) {
   //   // report an error if item not found
   //   callback(new Error(`No item with id: ${id}`));
